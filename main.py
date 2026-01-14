@@ -1,1 +1,1 @@
-print('pidor')
+print('pidor'),,,
