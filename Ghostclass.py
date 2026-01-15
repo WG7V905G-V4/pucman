@@ -21,9 +21,9 @@ class Ghost(Character):
         self.change_x, self.change_y = random.choice(direction)
         self.time_to_change_direction = random.uniform(0.3, 1.0)
 
-    def update(self, delta_time = 1/60):
+    def update1(self, delta_time = 1/60):
         self.time_to_change_direction -= delta_time
         if self.time_to_change_direction <= 0:
             self.pick_new_direction()
-        self.center_x = self.change_x * self.speed
-        self.center_x = self.change_x * self.speed
+        self.center_x += self.change_x * self.speed
+        self.center_x += self.change_x * self.speed
