@@ -10,5 +10,8 @@ class PacmanGame(arcade.View):
 
         self.player = arcade.SpriteList()
 
-        self.win_or_not = False
+        self.game_over = False
         self.background_color = arcade.color.BLACK
+
+        self.start_x = 0
+        self.start_y = 0
