@@ -80,7 +80,7 @@ def generate_maze_with_cycles(width, height, cycle_percent=15):
     return matrix
 
 
-def get_pacman_position(matrix):
+def set_pacman_position(matrix):
     rand = random.random()
     if rand <=0.25 and matrix[1][1] == 0:
         return 1, 1

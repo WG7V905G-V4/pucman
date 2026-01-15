@@ -1,12 +1,12 @@
 import LEVELTOOLS
 import arcade
-from pacman_class import Pacman
+
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 TILE_SIZE = 32
 LEVEL_MATRIX = LEVELTOOLS.generate_maze_with_cycles(WINDOW_WIDTH//TILE_SIZE, WINDOW_HEIGHT//TILE_SIZE, 0)
-LEVELTOOLS.get_pacman_position(LEVEL_MATRIX)
+LEVELTOOLS.set_pacman_position(LEVEL_MATRIX)
 LEVELTOOLS.set_ghost_cage(LEVEL_MATRIX)
 
 LEVELTOOLS.debug_matrix(LEVEL_MATRIX)
@@ -21,7 +21,7 @@ class PacmanGame(arcade.View):
         self.player = None
         self.game_over = False
         self.background_color = arcade.color.BLACK
-        self.start_y, self.start_x = LEVELTOOLS.get_pacman_position(LEVEL_MATRIX)
+        self.start_y, self.start_x = LEVELTOOLS.set_pacman_position(LEVEL_MATRIX)
 
     def setup(self):
         """Инициализация мира игры (один раз перед стартом или при рестарте)."""
