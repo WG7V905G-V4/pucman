@@ -1,9 +1,9 @@
 import arcade
 import random
+from main import TILE_SIZE
 
 class Character(arcade.Sprite):
     def __init__(self, center_x, center_y, speed):
-        TILE_SIZE = 32
         super().__init__()
         radius = TILE_SIZE // 2 - 2
         self.width = 30
@@ -30,10 +30,3 @@ class Ghost(Character):
 
         self.change_x, self.change_y = random.choice(direction)
         self.time_to_change_direction = random.uniform(0.3, 1.0)
-
-    def update(self, delta_time = 1/60):
-        self.time_to_change_direction -= delta_time
-        if self.time_to_change_direction <= 0:
-            self.pick_new_direction()
-        self.center_x = self.change_x * self.speed
-        self.center_x = self.change_x * self.speed
