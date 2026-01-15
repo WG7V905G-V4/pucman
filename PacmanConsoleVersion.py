@@ -41,8 +41,12 @@ class Enemy(Character):
         self.time_to_change_direction = random.uniform(0.3, 1.0)
 
     # Исправлено: не ломает координаты
-    def update(self, delta_time = 1/60):
-        pass
+    def update1(self, delta_time = 1/60):
+        self.time_to_change_direction -= delta_time
+        if self.time_to_change_direction <= 0:
+            self.pick_new_direction()
+        self.center_x += self.change_x * self.speed
+        self.center_x += self.change_x * self.speed
 
 class Wall:
     def __init__(self, center_x, center_y):
