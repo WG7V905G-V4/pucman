@@ -6,7 +6,8 @@ class Ghost(Character):
     def __init__(self, center_x, center_y, speed = 0):
         super().__init__(center_x, center_y, speed)
         self.time_to_change_direction = 0
-        texture = arcade.make_circle_texture(self.radius * 2, arcade.color.BLUE)
+        texture = arcade.make_circle_texture(self.radius * 2, arcade.color.RED)
+        self.texture = texture
 
     def pick_new_direction(self):
         direction = [
