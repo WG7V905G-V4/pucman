@@ -7,7 +7,7 @@ class BlueWall(arcade.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
-        size = TILE_SIZE - 2
+        size = TILE_SIZE
 
         self.texture = arcade.make_create_rect_texture(size, size, arcade.color.BLUE)
 
