@@ -94,13 +94,15 @@ def set_pacman_position(matrix):
 def set_ghost_cage(matrix):
     start_row = (len(matrix) - 2) // 2
     start_col = (len(matrix[0]) - 3) // 2
-
     for i in range(start_row, start_row + 2):
         for j in range(start_col, start_col + 3):
             matrix[i][j] = 0
             if (i, j)!=(start_row, start_col+2):
                 yield i,j
 
+def coords_to_pixels(cord, TILE_SIZE = 32):
+    """превращение координат из матрицы в пиксельное значение"""
+    return int(cord*TILE_SIZE)
 
 def debug_matrix(matrix):
     for row in matrix:
