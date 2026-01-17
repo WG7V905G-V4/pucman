@@ -21,15 +21,15 @@ class Character(arcade.Sprite):
             self.angle = self.rotation_angle * -1
             self.change_y = self.speed
             self.change_x = 0
-        elif key == arcade.key.DOWN:
+        if key == arcade.key.DOWN:
             self.angle = self.rotation_angle
             self.change_y = -self.speed
             self.change_x = 0
-        elif key == arcade.key.LEFT:
+        if key == arcade.key.LEFT:
             self.angle = self.rotation_angle *2
             self.change_x = -self.speed
             self.change_y = 0
-        elif key == arcade.key.RIGHT:
+        if key == arcade.key.RIGHT:
             self.angle = 0
             self.change_x = self.speed
             self.change_y = 0
