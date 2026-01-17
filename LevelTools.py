@@ -47,22 +47,21 @@ def generate_maze_with_cycles(width, height, cycle_percent=15):
 def set_pacman_position(matrix):
     rand = random.random()
     if rand <=0.25 and matrix[1][1] == 0:
-        return 1, 1
+        matrix[1][1] = 3
     elif 0.25 < rand <= 0.5 and matrix[1][len(matrix[0])-2] == 0:
-        return 1, len(matrix[0]) - 2
+        matrix[1][ len(matrix[0]) - 2] = 3
     elif 0.5 < rand <= 0.75 and matrix[len(matrix)-2][1] == 0:
-        return len(matrix) - 2,1
+        matrix[len(matrix) - 2][1] = 3
     else:
-        return len(matrix) - 2, len(matrix[0]) - 2
+        matrix[len(matrix) - 2][ len(matrix[0]) - 2] = 3
 
 def set_ghost_cage(matrix):
     x = (len(matrix[0])//2)-1
     y = (len(matrix)//2)-1
-    matrix[y][x] = 0
-    return x, y
+    matrix[y][x] = 2
 
 def coords_to_pixels(cords):
-    return tuple([cord*TILE_SIZE for cord in cords])
+    return tuple([cord*TILE_SIZE+TILE_SIZE//2 for cord in cords])
 
 
 def debug_matrix(matrix):
