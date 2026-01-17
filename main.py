@@ -1,5 +1,4 @@
 import arcade
-import random
 from LevelTools import *
 from classes.Ghost import Ghost
 from classes.Pacman import Pacman
@@ -41,7 +40,7 @@ class PacmanGame(arcade.View):
                     self.player = Pacman(coords_to_pixels((col, row)))
                     self.moving_sprites.append(self.player)
         for item in self.moving_sprites:
-            self.physics_engines.append(arcade.PhysicsEngineSimple(item,self.wall_list))
+            self.physics_engines.append(arcade.PhysicsEngineSimple(item, self.wall_list))
 
 
         debug_matrix(level_matrix)
@@ -51,16 +50,17 @@ class PacmanGame(arcade.View):
         self.clear()
         self.wall_list.draw()
         self.coin_list.draw()
-
         self.moving_sprites.draw()
-
-
 
         arcade.draw_text(f"Score: {self.score}", TILE_SIZE+2, TILE_SIZE//3,
                          arcade.color.WHITE, TILE_SIZE//2)
-        if self.game_over:
-            arcade.draw_text("GAME OVER!", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
+        if self.game_over and not self.coin_list:
+            arcade.draw_text("YOU WIN", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
+                             arcade.color.GREEN, 50, anchor_x="center")
+        if self.game_over and self.coin_list:
+            arcade.draw_text("GAME OVER", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
                              arcade.color.RED, 50, anchor_x="center")
+
 
 
     def on_key_press(self, key, modifiers):
@@ -77,11 +77,20 @@ class PacmanGame(arcade.View):
             self.player.stop()
             self.ghost.stop()
             self.game_over = True
+
         for engine in self.physics_engines:
             engine.update()
 
-        if arcade.check_for_collision_with_list(self.player, self.wall_list):
+        coins_hit_list = arcade.check_for_collision_with_list(self.player, self.coin_list)
+        for coin in coins_hit_list:
+            coin.remove_from_sprite_lists()
+            self.score += 1
+
+        if not self.coin_list:
             self.player.stop()
+            self.ghost.stop()
+            self.game_over = True
+
 
         self.player.update()
         self.ghost.update()

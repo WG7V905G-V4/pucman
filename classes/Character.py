@@ -1,8 +1,4 @@
-from time import sleep
-
 import arcade
-
-from EnvironmentVariables import *
 
 
 class Character(arcade.Sprite):
