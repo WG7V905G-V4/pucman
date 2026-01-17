@@ -20,6 +20,7 @@ class PacmanGame(arcade.View):
         self.player = None
         self.ghost_move_timer = 0
 
+        self.physics_engines = []
 
     def setup(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -39,6 +40,9 @@ class PacmanGame(arcade.View):
                 elif level_matrix[row][col] == 3:
                     self.player = Pacman(coords_to_pixels((col, row)))
                     self.moving_sprites.append(self.player)
+        for item in self.moving_sprites:
+            self.physics_engines.append(arcade.PhysicsEngineSimple(item,self.wall_list))
+
 
         debug_matrix(level_matrix)
 
@@ -73,6 +77,11 @@ class PacmanGame(arcade.View):
             self.player.stop()
             self.ghost.stop()
             self.game_over = True
+        for engine in self.physics_engines:
+            engine.update()
+
+        if arcade.check_for_collision_with_list(self.player, self.wall_list):
+            self.player.stop()
 
         self.player.update()
         self.ghost.update()
