@@ -5,10 +5,6 @@ from classes.Pacman import Pacman
 from classes.Wall import Wall
 from classes.Coin import Coin
 
-import heapq
-from time import time
-
-
 
 class PacmanGame(arcade.View):
     def __init__(self):
@@ -18,13 +14,11 @@ class PacmanGame(arcade.View):
 
         self.wall_list =arcade.SpriteList()
         self.coin_list =arcade.SpriteList()
-
-        self.moving_sprites = arcade.SpriteList()
         self.ghost = None
         self.player = None
+        self.moving_sprites = arcade.SpriteList()
         self.ghost_move_timer = 0
         self.key = None
-        self.level_matrix = []
         self.physics_engines = []
 
     def setup(self):
@@ -45,14 +39,7 @@ class PacmanGame(arcade.View):
                 elif level_matrix[row][col] == 3:
                     self.player = Pacman(coords_to_pixels((col, row)))
                     self.moving_sprites.append(self.player)
-        """for item in self.moving_sprites:
-            self.physics_engines.append(arcade.PhysicsEngineSimple(item, self.wall_list))"""
-        level_matrix.reverse()
-        self.level_matrix = level_matrix
-        debug_matrix(level_matrix)
 
-    def push(self, cell_value):
-        ...
     def on_draw(self):
         self.clear()
 
@@ -61,10 +48,11 @@ class PacmanGame(arcade.View):
         self.moving_sprites.draw()
 
         arcade.draw_text(f"Score: {self.score}", TILE_SIZE+2, TILE_SIZE//3,
-                         arcade.color.WHITE, TILE_SIZE//2)
+                         arcade.color.YELLOW, TILE_SIZE//2)
         if self.game_over and not self.coin_list:
             arcade.draw_text("YOU WIN", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
                              arcade.color.GREEN, 50, anchor_x="center")
+
         if self.game_over and self.coin_list:
             arcade.draw_text("GAME OVER", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
                              arcade.color.RED, 50, anchor_x="center")
@@ -81,23 +69,37 @@ class PacmanGame(arcade.View):
 
     def on_update(self, delta_time):
 
-
         if self.player.center_x % 32 - 16 == 0 and self.player.center_y % 32 -16 == 0:
             if self.key is None:
                 self.player.stop()
             else:
-                self.player.move(self.key, self.level_matrix)
+                self.player.move(self.key)
 
-        if arcade.check_for_collision(self.player, self.ghost):
+        if arcade.check_for_collision_with_list(self.player, self.wall_list):
+            self.player.center_x = self.player.m_x*TILE_SIZE+16
+            self.player.center_y = self.player.m_y*TILE_SIZE+16
             self.player.stop()
-            self.ghost.stop()
-            self.game_over = True
+            self.key = None
 
-        for item in self.moving_sprites:
-            if arcade.check_for_collision_with_list(item, self.wall_list):
-                item.center_x = item.m_x*TILE_SIZE+16
-                item.center_y = item.m_y*TILE_SIZE+16
-                item.stop()
+
+
+        if self.ghost.center_x % 32 - 16 == 0 and self.ghost.center_y % 32 -16 == 0:
+            if self.key is None:
+                self.ghost.stop()
+            else:
+                self.ghost_move_timer += delta_time
+                if self.ghost_move_timer >= 0.2:
+                    self.ghost_move_timer = 0
+                    self.ghost.move(random.choice([arcade.key.UP,
+                                               arcade.key.DOWN,
+                                               arcade.key.LEFT,
+                                               arcade.key.RIGHT]))
+
+        if arcade.check_for_collision_with_list(self.ghost, self.wall_list):
+            self.ghost.center_x = self.ghost.m_x*TILE_SIZE+16
+            self.ghost.center_y = self.ghost.m_y*TILE_SIZE+16
+            self.ghost.stop()
+
 
         coins_hit_list = arcade.check_for_collision_with_list(self.player, self.coin_list)
         for coin in coins_hit_list:
@@ -110,17 +112,14 @@ class PacmanGame(arcade.View):
             self.game_over = True
 
 
+        if arcade.check_for_collision(self.player, self.ghost):
+            self.player.stop()
+            self.ghost.stop()
+            self.game_over = True
+
+
         self.player.update()
         self.ghost.update()
-
-
-        self.ghost_move_timer += delta_time
-        if self.ghost_move_timer >= 0.2:
-            self.ghost_move_timer = 0
-            self.ghost.move(random.choice([arcade.key.UP,
-                                           arcade.key.DOWN,
-                                           arcade.key.LEFT,
-                                           arcade.key.RIGHT]), self.level_matrix)
 
 
 def main():

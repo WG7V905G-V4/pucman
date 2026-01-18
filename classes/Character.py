@@ -18,13 +18,13 @@ class Character(arcade.Sprite):
         self.speed = speed
         self.rotation_angle = rotation_angle
         self.m_x , self.m_y = self.center_x//TILE_SIZE, self.center_y//TILE_SIZE
+        self.key= None
 
     def update(self, *args, **kwargs):
         self.m_x , self.m_y = self.center_x//TILE_SIZE, self.center_y//TILE_SIZE
         super().update()
 
-    def move(self, key, matrix):
-
+    def move(self, key):
         if key in KEY_CONFIG:
             self.angle, self.change_x, self.change_y =tuple(
                 x * y for x, y in zip(
