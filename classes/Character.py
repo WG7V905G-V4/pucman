@@ -1,31 +1,38 @@
 import arcade
 
+from EnvironmentVariables import TILE_SIZE
+
+KEY_CONFIG = {
+    #rotation_angle, change_x, change_y, matrix_check_row, matrix_check_col
+    arcade.key.UP: [(-1, 0, 1), (-1, 0)],
+    arcade.key.DOWN: [(1, 0, -1),(1, 0)],
+    arcade.key.LEFT: [(2, -1, 0),(0, -1)],
+    arcade.key.RIGHT:[(0, 1, 0),(0, 1)]
+}
+
 
 class Character(arcade.Sprite):
     def __init__(self, texture, cords, speed, rotation_angle):
         super().__init__(texture, 1)
-        x, y = cords
-        self.center_x = x
-        self.center_y = y
+        self.center_x, self.center_y = cords
         self.speed = speed
         self.rotation_angle = rotation_angle
-        self.move_delay = 0
+        self.m_x , self.m_y = self.center_x//TILE_SIZE, self.center_y//TILE_SIZE
 
-    def move(self, key):
+    def update(self, *args, **kwargs):
+        self.m_x , self.m_y = self.center_x//TILE_SIZE, self.center_y//TILE_SIZE
+        super().update()
 
-        if key == arcade.key.UP:
-            self.angle = self.rotation_angle * -1
-            self.change_y = self.speed
-            self.change_x = 0
-        if key == arcade.key.DOWN:
-            self.angle = self.rotation_angle
-            self.change_y = -self.speed
-            self.change_x = 0
-        if key == arcade.key.LEFT:
-            self.angle = self.rotation_angle *2
-            self.change_x = -self.speed
-            self.change_y = 0
-        if key == arcade.key.RIGHT:
-            self.angle = 0
-            self.change_x = self.speed
-            self.change_y = 0
+    def move(self, key, matrix):
+
+        if key in KEY_CONFIG:
+            self.angle, self.change_x, self.change_y =tuple(
+                x * y for x, y in zip(
+                    (self.rotation_angle, self.speed, self.speed),
+                    KEY_CONFIG[key][0]
+                )
+            )
+
+    def stop(self):
+        if self.center_x % (TILE_SIZE//2) == 0 and self.center_y %(TILE_SIZE//2) == 0:
+           super().stop()
