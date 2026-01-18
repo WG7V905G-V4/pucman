@@ -23,7 +23,7 @@ class PacmanGame(arcade.View):
 
     def setup(self):
         arcade.set_background_color(arcade.color.BLACK)
-        level_matrix = generate_maze_with_cycles(WINDOW_WIDTH // TILE_SIZE, WINDOW_HEIGHT // TILE_SIZE, 0)
+        level_matrix = generate_maze_with_cycles(WINDOW_WIDTH // TILE_SIZE, WINDOW_HEIGHT // TILE_SIZE, MAZE_CYCLE_GENERATION)
         set_pacman_position(level_matrix)
         set_ghost_cage(level_matrix)
 
@@ -64,8 +64,7 @@ class PacmanGame(arcade.View):
             self.key = key
 
     def on_key_release(self, key, modifiers):
-        if self.key == key:
-            self.key = None
+        ...
 
     def on_update(self, delta_time):
 
