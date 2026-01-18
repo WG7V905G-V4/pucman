@@ -24,15 +24,16 @@ class Character(arcade.Sprite):
         self.m_x , self.m_y = self.center_x//TILE_SIZE, self.center_y//TILE_SIZE
         super().update()
 
-    def move(self, key):
-        if key in KEY_CONFIG:
+    def move(self):
+        if self.key in KEY_CONFIG:
             self.angle, self.change_x, self.change_y =tuple(
                 x * y for x, y in zip(
                     (self.rotation_angle, self.speed, self.speed),
-                    KEY_CONFIG[key][0]
+                    KEY_CONFIG[self.key][0]
                 )
             )
 
     def stop(self):
         if self.center_x % (TILE_SIZE//2) == 0 and self.center_y %(TILE_SIZE//2) == 0:
+           self.key = None
            super().stop()
