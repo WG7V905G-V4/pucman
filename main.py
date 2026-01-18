@@ -18,9 +18,7 @@ class PacmanGame(arcade.View):
         self.moving_sprites = arcade.SpriteList()
         self.ghost_list = arcade.SpriteList()
         self.key = None
-        self.ghost_astar = None
-
-        self.level_matrix = []
+        self.fruit_list = arcade.SpriteList()
 
     def setup(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -41,6 +39,7 @@ class PacmanGame(arcade.View):
                 elif level_matrix[row][col] == 3:
                     self.player = Pacman(coords_to_pixels((col, row)))
                     self.moving_sprites.append(self.player)
+
 
     def on_draw(self):
         self.clear()
@@ -72,6 +71,14 @@ class PacmanGame(arcade.View):
                     sprite.stop()
                 else:
                     sprite.move()
+
+            if type(sprite) == Ghost:
+                if arcade.check_for_collision_with_list(sprite, self.ghost_list):
+                    sprite.center_x = sprite.m_x*TILE_SIZE+16
+                    sprite.center_y = sprite.m_y*TILE_SIZE+16
+                    sprite.stop()
+
+
             if arcade.check_for_collision_with_list(sprite, self.wall_list):
                 sprite.center_x = sprite.m_x*TILE_SIZE+16
                 sprite.center_y = sprite.m_y*TILE_SIZE+16
@@ -82,6 +89,8 @@ class PacmanGame(arcade.View):
         for coin in coins_hit_list:
             coin.remove_from_sprite_lists()
             self.score += 1
+
+
 
         if not self.coin_list:
             for sprite in self.moving_sprites:

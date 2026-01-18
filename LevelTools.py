@@ -56,12 +56,14 @@ def set_pacman_position(matrix):
         matrix[len(matrix) - 2][ len(matrix[0]) - 2] = 3
 
 def set_ghost_cage(matrix):
-    for y in range((len(matrix)//2)-1, (len(matrix)//2)+2):
-        for x in range((len(matrix)//2)-1, (len(matrix)//2)+1):
+    for y in range((len(matrix)//2)+1, (len(matrix)//2)+3):
+        for x in range((len(matrix)//2)+1, (len(matrix)//2)+3):
             matrix[y][x] = 2
 
 def coords_to_pixels(cords):
     return tuple([cord*TILE_SIZE+TILE_SIZE//2 for cord in cords])
+
+
 
 
 def debug_matrix(matrix):
