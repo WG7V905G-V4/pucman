@@ -74,4 +74,5 @@ def debug_matrix(matrix):
                 print("❤️", end=" ")
             if col == 3:
                 print("😒", end=" ")
+
         print()
