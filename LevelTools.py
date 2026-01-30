@@ -59,6 +59,11 @@ def set_ghost_cage(matrix):
     x,y  = len(matrix)//2, len(matrix)//2
     matrix[y][x] = 2
 
+def set_apples(matrix):
+    x,y = len(matrix)//2+1, len(matrix)//2+1
+    matrix[y][x] = '#'
+    #сделал чтобы проверить эпл, костя потом поменяет
+
 def coords_to_pixels(cords):
     return tuple([cord*TILE_SIZE+TILE_SIZE//2 for cord in cords])
 

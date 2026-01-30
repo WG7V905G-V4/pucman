@@ -18,7 +18,7 @@ WALL_TEXTURE = "img/wall.png"
 COIN_TEXTURE = "img/coin.png"
 
 
-AMOUT_OF_APPLES = 3
+APPLE_TEXTURE = "img/apple.png"
 
 
 

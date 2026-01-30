@@ -4,6 +4,8 @@ from classes.Ghost import Ghost
 from classes.Pacman import Pacman
 from classes.Wall import Wall
 from classes.Coin import Coin
+from classes.Apple import Apple
+import time
 
 
 class PacmanGame(arcade.View):
@@ -19,12 +21,18 @@ class PacmanGame(arcade.View):
         self.ghost_list = arcade.SpriteList()
         self.key = None
         self.fruit_list = arcade.SpriteList()
+        self.apple_list = arcade.SpriteList()
+
+        self.eat_ghost_mode_on = False
+        self.time_for_eat_mode = 0
+        self.eat_time = 0
 
     def setup(self):
         arcade.set_background_color(arcade.color.BLACK)
         level_matrix = generate_maze_with_cycles(WINDOW_WIDTH // TILE_SIZE, WINDOW_HEIGHT // TILE_SIZE, MAZE_CYCLE_GENERATION)
         set_pacman_position(level_matrix)
         set_ghost_cage(level_matrix)
+        set_apples(level_matrix)
 
         for row in range(len(level_matrix)):
             for col in range(len(level_matrix[row])):
@@ -39,6 +47,8 @@ class PacmanGame(arcade.View):
                 elif level_matrix[row][col] == 3:
                     self.player = Pacman(coords_to_pixels((col, row)))
                     self.moving_sprites.append(self.player)
+                elif level_matrix[row][col] == '#':
+                    self.apple_list.append(Apple(coords_to_pixels((col, row))))
 
 
     def on_draw(self):
@@ -47,6 +57,7 @@ class PacmanGame(arcade.View):
         self.wall_list.draw()
         self.coin_list.draw()
         self.moving_sprites.draw()
+        self.apple_list.draw()
 
         arcade.draw_text(f"Score: {self.score}", TILE_SIZE+2, TILE_SIZE//3,
                          arcade.color.YELLOW, TILE_SIZE//2)
@@ -65,6 +76,12 @@ class PacmanGame(arcade.View):
             self.player.key = key
 
     def on_update(self, delta_time):
+        if self.eat_ghost_mode_on:
+            cur_time = time.time()
+            if cur_time - self.eat_time >= self.time_for_eat_mode:
+                self.eat_ghost_mode_on = False
+                self.time_for_eat_mode = 0
+
         for sprite in self.moving_sprites:
             if sprite.center_x % 32 - 16 == 0 and sprite.center_y % 32 -16 == 0:
                 if sprite.key is None:
@@ -79,6 +96,8 @@ class PacmanGame(arcade.View):
                     sprite.stop()
 
 
+
+
             if arcade.check_for_collision_with_list(sprite, self.wall_list):
                 sprite.center_x = sprite.m_x*TILE_SIZE+16
                 sprite.center_y = sprite.m_y*TILE_SIZE+16
@@ -90,6 +109,14 @@ class PacmanGame(arcade.View):
             coin.remove_from_sprite_lists()
             self.score += 1
 
+        apples_hit_list = arcade.check_for_collision_with_list(self.player, self.apple_list)
+
+        for apple in apples_hit_list:
+            apple.remove_from_sprite_lists()
+            self.time_for_eat_mode += 6
+            self.eat_ghost_mode_on = True
+            self.eat_time = time.time()
+
 
 
         if not self.coin_list:
@@ -98,9 +125,14 @@ class PacmanGame(arcade.View):
             self.game_over = True
 
         if arcade.check_for_collision_with_list(self.player, self.ghost_list):
-            for sprite in self.moving_sprites:
-                sprite.stop()
-            self.game_over = True
+            if self.eat_ghost_mode_on:
+                ghost_hit_list = arcade.check_for_collision_with_list(self.player, self.ghost_list)
+                for ghost in ghost_hit_list:
+                    ghost.remove_from_sprite_lists()
+            else:
+                for sprite in self.moving_sprites:
+                    sprite.stop()
+                self.game_over = True
 
 
         for sprite in self.moving_sprites:
