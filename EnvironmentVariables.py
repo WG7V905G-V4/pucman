@@ -20,5 +20,5 @@ COIN_TEXTURE = "img/coin.png"
 
 APPLE_TEXTURE = "img/apple.png"
 
-
+TELEPORT_TEXTURE = "img/galaxy_433942.png"
 

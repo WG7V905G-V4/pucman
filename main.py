@@ -6,6 +6,7 @@ from classes.Wall import Wall
 from classes.Coin import Coin
 from classes.Apple import Apple
 import time
+from classes.Teleport import Teleport
 
 
 class PacmanGame(arcade.View):
@@ -16,6 +17,7 @@ class PacmanGame(arcade.View):
 
         self.wall_list =arcade.SpriteList()
         self.coin_list =arcade.SpriteList()
+        self.teleport_list_red = arcade.SpriteList()
         self.player = None
         self.moving_sprites = arcade.SpriteList()
         self.ghost_list = arcade.SpriteList()
@@ -26,6 +28,7 @@ class PacmanGame(arcade.View):
         self.eat_ghost_mode_on = False
         self.time_for_eat_mode = 0
         self.eat_time = 0
+        self.flag_tep = True
 
     def setup(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -33,6 +36,7 @@ class PacmanGame(arcade.View):
         set_pacman_position(level_matrix)
         set_ghost_cage(level_matrix)
         set_apples(level_matrix)
+        self.teleports = set_teleports(level_matrix)
 
         for row in range(len(level_matrix)):
             for col in range(len(level_matrix[row])):
@@ -49,6 +53,8 @@ class PacmanGame(arcade.View):
                     self.moving_sprites.append(self.player)
                 elif level_matrix[row][col] == '#':
                     self.apple_list.append(Apple(coords_to_pixels((col, row))))
+                elif level_matrix[row][col] == "@":
+                    self.teleport_list_red.append(Teleport(coords_to_pixels((col, row))))
 
 
     def on_draw(self):
@@ -56,6 +62,7 @@ class PacmanGame(arcade.View):
 
         self.wall_list.draw()
         self.coin_list.draw()
+        self.teleport_list_red.draw()
         self.moving_sprites.draw()
         self.apple_list.draw()
 
@@ -102,6 +109,30 @@ class PacmanGame(arcade.View):
                 sprite.center_x = sprite.m_x*TILE_SIZE+16
                 sprite.center_y = sprite.m_y*TILE_SIZE+16
                 sprite.stop()
+
+            if sprite == self.player:
+                hit_teleports = arcade.check_for_collision_with_list(
+                    self.player, self.teleport_list_red
+                )
+
+                if hit_teleports and self.flag_tep:
+                    player_cell = (
+                        int(self.player.center_x // TILE_SIZE),
+                        int(self.player.center_y // TILE_SIZE)
+                    )
+
+                    if player_cell == self.teleports[0]:
+                        self.player.center_x, self.player.center_y = \
+                            coords_to_pixels(self.teleports[1])
+                        self.flag_tep = False
+
+                    elif player_cell == self.teleports[1]:
+                        self.player.center_x, self.player.center_y = \
+                            coords_to_pixels(self.teleports[0])
+                        self.flag_tep = False
+
+                if not hit_teleports:
+                    self.flag_tep = True
 
 
         coins_hit_list = arcade.check_for_collision_with_list(self.player, self.coin_list)

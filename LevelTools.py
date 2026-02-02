@@ -44,6 +44,7 @@ def generate_maze_with_cycles(width, height, cycle_percent=15):
     return matrix
 
 
+
 def set_pacman_position(matrix):
     rand = random.random()
     if rand <=0.25 and matrix[1][1] == 0:
@@ -59,6 +60,28 @@ def set_ghost_cage(matrix):
     x,y  = len(matrix)//2, len(matrix)//2
     matrix[y][x] = 2
 
+def set_teleports(matrix):
+    empty_cells = []
+
+    for y in range(1, len(matrix) - 1):
+        for x in range(1, len(matrix[0]) - 1):
+            if matrix[y][x] == 0:
+                empty_cells.append((x, y))
+
+    if len(empty_cells) < 2:
+        return None
+
+    teleport_a, teleport_b = random.sample(empty_cells, 2)
+
+    ax, ay = teleport_a
+    bx, by = teleport_b
+
+    matrix[ay][ax] = '@'
+    matrix[by][bx] = '@'
+
+    return teleport_a, teleport_b
+
+
 def set_apples(matrix):
     x,y = len(matrix)//2+1, len(matrix)//2+1
     matrix[y][x] = '#'
@@ -67,17 +90,3 @@ def set_apples(matrix):
 def coords_to_pixels(cords):
     return tuple([cord*TILE_SIZE+TILE_SIZE//2 for cord in cords])
 
-
-def debug_matrix(matrix):
-    for row in matrix:
-        for col in row:
-            if col == 0:
-                print("⬜", end=' ')
-            if col == 1:
-                print("⬛", end=" ")
-            if col == 2:
-                print("❤️", end=" ")
-            if col == 3:
-                print("😒", end=" ")
-
-        print()
