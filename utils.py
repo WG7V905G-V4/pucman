@@ -72,6 +72,7 @@ def load_level_from_txt():
                         "😡":"r_ghost",
                         "⭐":"y_ghost",
                         "📘":"b_ghost",
-                        "😈":"p_ghost"}
+                        "😈":"p_ghost",
+                        "🍎":"apple"}
     with open("SETTINGS/level.txt", "r", encoding="utf-8") as file:
         return [[decode_emoji_lst[emoji] for emoji in row.strip()] for row in file.readlines()]
