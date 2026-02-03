@@ -18,7 +18,7 @@ WALL_TEXTURE,"img/wall.png"
 WALL_SCALE,1
 COIN_TEXTURE,"img/coin.png"
 COIN_SCALE,0.6
-APPLE_TEXTURE,"img/apple.png"
-APPLE_SCALE,0.8
+APPLE_TEXTURE,"img/coin.png"
+APPLE_SCALE,1.5
 TELEPORT_TEXTURE,"img/teleport.png"
 TELEPORT_SCALE,0.9
