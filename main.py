@@ -10,6 +10,7 @@ from classes.Apple import Apple
 import time
 from classes.Teleport import Teleport
 
+print(1)
 TILE = ENV_VAR_DICT["TILE_SIZE"]
 class PacmanGame(arcade.View):
     def __init__(self, level_matrix, w_s_x=0, w_s_y=0):
