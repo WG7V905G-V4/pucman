@@ -101,7 +101,7 @@ class PacmanGame(arcade.View):
 
         for ghost in self.ghost_list:
             ghost.update()
-            if arcade.check_for_collision_with_list(ghost, self.teleport_list) or arcade.check_for_collision_with_list(ghost, self.ghost_list) or arcade.check_for_collision_with_list(ghost, self.wall_list):
+            if arcade.check_for_collision_with_list(ghost, self.teleport_list) or arcade.check_for_collision_with_list(ghost, self.wall_list):
                 ghost.center_x = ghost.m_x * TILE_SIZE + 16
                 ghost.center_y = ghost.m_y * TILE_SIZE + 16
                 ghost.stop()
