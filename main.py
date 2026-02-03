@@ -97,14 +97,31 @@ class PacmanGame(arcade.View):
                 else:
                     sprite.move()
 
-
-
         for ghost in self.ghost_list:
-            ghost.update()
-            if arcade.check_for_collision_with_list(ghost, self.teleport_list) or arcade.check_for_collision_with_list(ghost, self.ghost_list) or arcade.check_for_collision_with_list(ghost, self.wall_list):
+            # Передаем игрока и стены для умного поиска пути
+            ghost.update(self.player, self.wall_list)
+
+            # --- ИСПРАВЛЕНИЕ НИЖЕ ---
+
+            # 1. Если призрак врезался в СТЕНУ -> стоп и возврат на клетку
+            if arcade.check_for_collision_with_list(ghost, self.wall_list):
                 ghost.center_x = ghost.m_x * TILE_SIZE + 16
                 ghost.center_y = ghost.m_y * TILE_SIZE + 16
                 ghost.stop()
+
+            # 2. Если призрак попал в ТЕЛЕПОРТ (если нужно, чтобы они телепортировались)
+            # Если не хотите, чтобы призраки телепортировались, уберите этот блок
+            if arcade.check_for_collision_with_list(ghost, self.teleport_list):
+                # Логика телепортации призраков (если нужна)
+                pass
+
+                # ЗАМЕТЬТЕ: Мы УБРАЛИ проверку (ghost, self.ghost_list)
+
+        # ... (дальше код для player)
+
+
+
+
 
         if arcade.check_for_collision_with_list(player:=self.player, self.wall_list):
             player.center_x = player.m_x * TILE_SIZE + 16
