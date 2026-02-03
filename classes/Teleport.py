@@ -1,7 +1,8 @@
 import arcade
-from EnvironmentVariables import *
+from LevelTools import *
 
 class Teleport(arcade.Sprite):
     def __init__(self, cords):
         x,y = cords
-        super().__init__(TELEPORT_TEXTURE, 0.05, x ,y)
+        super().__init__(ENV_VAR_DICT["TELEPORT_TEXTURE"], ENV_VAR_DICT['TELEPORT_SCALE'], x,y )
+
