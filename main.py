@@ -1,114 +1,95 @@
 import arcade
-from LevelTools import *
-from classes.Ghost import Ghost
-from classes.Pacman import Pacman
-from classes.Wall import Wall
-from classes.Coin import Coin
+from arcade import check_for_collision_with_lists as collision_lists
+from Sprite import Sprite
+from utils import *
+
+def collision_of_lists(lists1, lists2, action):
 
 
 class PacmanGame(arcade.View):
-    def __init__(self):
+    def __init__(self, level_matrix, w_s_x=0, w_s_y=0):
         super().__init__()
+        self.w, self.h = w_s_x, w_s_y
         self.score = 0
         self.game_over = False
+        self.level_matrix = level_matrix
+        self.coin = arcade.SpriteList(),
+        self.ghost = arcade.SpriteList(),
+        self.wall = arcade.SpriteList(),
+        self.pacman = arcade.SpriteList()
+        arcade.set_background_color(arcade.color.BLACK)
 
-        self.wall_list =arcade.SpriteList()
-        self.coin_list =arcade.SpriteList()
-        self.player = None
-        self.moving_sprites = arcade.SpriteList()
-        self.ghost_list = arcade.SpriteList()
-        self.key = None
-        self.fruit_list = arcade.SpriteList()
+    def append(self, sprite):
+        if sprite.character_type == "pacman":
+            self.pacman = sprite
+        type = "ghost" if "ghost" in sprite.character_type else sprite.character_type
+        getattr(self, type).append(sprite)
+
+    def stop(self):
+        for list_type in ["wall", "coin", "ghost", "pacman"]:
+            for sprite in getattr(self, list_type):
+                sprite.stop()
+
+    def update(self):
+        for list_type in ["wall", "coin", "ghost", "pacman"]:
+            getattr(self, list_type).update()
+
+    def draw(self):
+        for list_type in ["wall", "coin", "ghost", "pacman"]:
+            getattr(self, list_type).draw()
 
     def setup(self):
-        arcade.set_background_color(arcade.color.BLACK)
-        level_matrix = generate_maze_with_cycles(WINDOW_WIDTH // TILE_SIZE, WINDOW_HEIGHT // TILE_SIZE, MAZE_CYCLE_GENERATION)
-        set_pacman_position(level_matrix)
-        set_ghost_cage(level_matrix)
-
-        for row in range(len(level_matrix)):
-            for col in range(len(level_matrix[row])):
-                if level_matrix[row][col] == 0:
-                    self.coin_list.append(Coin(coords_to_pixels((col, row))))
-                elif level_matrix[row][col] == 1:
-                    self.wall_list.append(Wall(coords_to_pixels((col, row))))
-                elif level_matrix[row][col] == 2:
-                    ghost = Ghost(coords_to_pixels((col, row)))
-                    self.ghost_list.append(ghost)
-                    self.moving_sprites.append(ghost)
-                elif level_matrix[row][col] == 3:
-                    self.player = Pacman(coords_to_pixels((col, row)))
-                    self.moving_sprites.append(self.player)
-
+        for cord_y, row in enumerate(self.level_matrix):
+            for cord_x, item in enumerate(row):
+                self.append(Sprite(item, coords_to_pixels((cord_x, cord_y))))
 
     def on_draw(self):
         self.clear()
-
-        self.wall_list.draw()
-        self.coin_list.draw()
-        self.moving_sprites.draw()
-
-        arcade.draw_text(f"Score: {self.score}", TILE_SIZE+2, TILE_SIZE//3,
-                         arcade.color.YELLOW, TILE_SIZE//2)
-        if self.game_over and not self.coin_list:
-            arcade.draw_text("YOU WIN", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
+        self.draw()
+        arcade.draw_text(f"Score: {self.score}", ENV_VAR_DICT['TILE_SIZE']+2, ENV_VAR_DICT['TILE_SIZE']//3,
+                         arcade.color.YELLOW, ENV_VAR_DICT['TILE_SIZE']//2)
+        if self.game_over and not self.get(["coin"]):
+            arcade.draw_text("YOU WIN", self.w // 2, self.h // 2,
                              arcade.color.GREEN, 50, anchor_x="center")
-
-        if self.game_over and self.coin_list:
-            arcade.draw_text("GAME OVER", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
+        if self.game_over and self.get(["coin"]):
+            arcade.draw_text("GAME OVER", self.w // 2, self.h // 2,
                              arcade.color.RED, 50, anchor_x="center")
-
-
 
     def on_key_press(self, key, modifiers):
         if not self.game_over:
-            self.player.key = key
+            self.pacman.key = key
 
     def on_update(self, delta_time):
-        for sprite in self.moving_sprites:
-            if sprite.center_x % 32 - 16 == 0 and sprite.center_y % 32 -16 == 0:
-                if sprite.key is None:
-                    sprite.stop()
-                else:
-                    sprite.move()
+        self.update()
+        for pacman in self.pacman:
+            if collision_lists(pacman, self.wall):
+                def collision(item):
+                    item.center_x = item.m_x * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2
+                    item.center_y = item.m_y * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2
+                    item.stop()
 
-            if type(sprite) == Ghost:
-                if arcade.check_for_collision_with_list(sprite, self.ghost_list):
-                    sprite.center_x = sprite.m_x*TILE_SIZE+16
-                    sprite.center_y = sprite.m_y*TILE_SIZE+16
-                    sprite.stop()
+        for ghost in self.ghost:
+            if arcade.check_for_collision_with_lists(ghost, [self.ghost, self.wall]):
+                collision(ghost)
+            coin_hit = collision_lists(self.pacman, self.get(["coin"]))
+            for food in food_hit_list:
+                food.remove_from_sprite_lists()
+                self.score += 1
 
+            if collision_lists(self.pacman, self.get(["ghost"])):
+                self.stop()
+                self.game_over = True
 
-            if arcade.check_for_collision_with_list(sprite, self.wall_list):
-                sprite.center_x = sprite.m_x*TILE_SIZE+16
-                sprite.center_y = sprite.m_y*TILE_SIZE+16
-                sprite.stop()
-
-
-        coins_hit_list = arcade.check_for_collision_with_list(self.player, self.coin_list)
-        for coin in coins_hit_list:
-            coin.remove_from_sprite_lists()
-            self.score += 1
-
-
-
-        if not self.coin_list:
-            for sprite in self.moving_sprites:
-                sprite.stop()
+        if not self.get(["coin"]):
+            self.stop()
             self.game_over = True
 
-        if arcade.check_for_collision_with_list(self.player, self.ghost_list):
-            for sprite in self.moving_sprites:
-                sprite.stop()
-            self.game_over = True
-
-
-        for sprite in self.moving_sprites:
-            sprite.update()
 
 def main():
-    window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "PACMAN GAME")
-    game = PacmanGame()
+    level_matrix = load_level_from_txt()
+    w_s_x,w_s_y = len(level_matrix[0])*ENV_VAR_DICT['TILE_SIZE'], len(level_matrix)*ENV_VAR_DICT['TILE_SIZE']
+    window = arcade.Window(w_s_x, w_s_y, "PACMAN GAME", resizable=True)
+    game = PacmanGame(level_matrix, w_s_x, w_s_y)
     game.setup()
     window.show_view(game)
     arcade.run()
