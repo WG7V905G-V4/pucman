@@ -155,7 +155,7 @@ class PacmanGame(arcade.View):
                 for sprite in self.moving_sprites:
                     sprite.stop()
                 self.game_over = True
-
+        self.player.update()
 
 
 
