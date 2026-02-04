@@ -9,6 +9,7 @@ from classes.Coin import Coin
 from classes.Apple import Apple
 import time
 from classes.Teleport import Teleport
+from music import *
 
 TILE = ENV_VAR_DICT["TILE_SIZE"]
 class PacmanGame(arcade.View):
@@ -35,6 +36,13 @@ class PacmanGame(arcade.View):
         self.eat_time = 0
         self.flag_tep = False
         arcade.set_background_color(arcade.color.BLACK)
+
+
+        #sounds and music
+        self.coin_sound = arcade.load_sound("music/coin_sound.wav")
+        self.apple_sound = arcade.load_sound("music/apple_sound.wav")
+        self.win_sound = arcade.load_sound("music/win_sound.wav")
+        self.lose_sound = arcade.load_sound("music/lose_sound.wav")
 
     def setup(self):
         for i_row, row in enumerate(self.level_matrix):
@@ -82,6 +90,8 @@ class PacmanGame(arcade.View):
             self.player.key = key
 
     def on_update(self, delta_time):
+        if self.game_over:
+            return
         if self.eat_ghost_mode_on:
             cur_time = time.time()
             if cur_time - self.eat_time >= self.time_for_eat_mode:
@@ -128,12 +138,14 @@ class PacmanGame(arcade.View):
         for coin in coins_hit_list:
             coin.remove_from_sprite_lists()
             self.score += 1
+            arcade.play_sound(self.coin_sound)
 
         apples_hit_list = arcade.check_for_collision_with_list(self.player, self.apple_list)
 
         for apple in apples_hit_list:
             apple.remove_from_sprite_lists()
             self.time_for_eat_mode += 6
+            arcade.play_sound(self.apple_sound)
             for ghost in self.ghost_list:
                 ghost.texture = arcade.load_texture(ENV_VAR_DICT["EATABLE"])
             self.eat_ghost_mode_on = True
@@ -141,12 +153,13 @@ class PacmanGame(arcade.View):
 
 
 
-        if not self.coin_list:
+        if not self.coin_list and not self.game_over:
             for sprite in self.moving_sprites:
                 sprite.stop()
             self.game_over = True
+            arcade.play_sound(self.win_sound)
 
-        if arcade.check_for_collision_with_list(self.player, self.ghost_list):
+        if arcade.check_for_collision_with_list(self.player, self.ghost_list) and not self.game_over:
             if self.eat_ghost_mode_on:
                 ghost_hit_list = arcade.check_for_collision_with_list(self.player, self.ghost_list)
                 for ghost in ghost_hit_list:
@@ -155,6 +168,7 @@ class PacmanGame(arcade.View):
                 for sprite in self.moving_sprites:
                     sprite.stop()
                 self.game_over = True
+                arcade.play_sound(self.lose_sound)
         self.player.update()
 
 
