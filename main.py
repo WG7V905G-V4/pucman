@@ -7,6 +7,7 @@ from classes.Coin import Coin
 from classes.Apple import Apple
 import time
 from classes.Teleport import Teleport
+from classes.Cherry import Cherry
 
 TILE = ENV_VAR_DICT["TILE_SIZE"]
 
@@ -29,11 +30,13 @@ class PacmanGame(arcade.View):
         self.key = None
         self.fruit_list = arcade.SpriteList()
         self.apple_list = arcade.SpriteList()
+        self.cherry_list = arcade.SpriteList()
 
         self.eat_ghost_mode_on = False
         self.time_for_eat_mode = 0
         self.eat_time = 0
         self.flag_tep = False
+        self.cherry_avail = False
         arcade.set_background_color(arcade.color.BLACK)
 
         # Для A* алгоритма
@@ -66,6 +69,11 @@ class PacmanGame(arcade.View):
                     self.apple_list.append(Apple(coords_to_pixels((i_col, i_row))))
                 elif col == "teleport":
                     self.teleport_list.append(Teleport(coords_to_pixels((i_col, i_row))))
+                elif col == "cherry":
+                    self.cherry_list.append(Cherry(coords_to_pixels((i_col, i_row))))
+        for cherry in self.cherry_list:
+            cherry.alpha = 0
+
 
         # Создаем AStarBarrierList после того, как все стены загружены
         # Используем первого призрака для расчета размеров (все призраки одинакового размера)
@@ -161,6 +169,7 @@ class PacmanGame(arcade.View):
         self.coin_list.draw()
         self.teleport_list.draw()
         self.apple_list.draw()
+        self.cherry_list.draw()
         self.moving_sprites.draw()
 
         arcade.draw_text(f"Score: {self.score}", TILE_SIZE + 2, TILE_SIZE // 3,
@@ -208,16 +217,13 @@ class PacmanGame(arcade.View):
             ghost.update(self.player, self.wall_list)
 
             # Проверка коллизии со стеной
-            if arcade.check_for_collision_with_list(ghost, self.wall_list):
+            if arcade.check_for_collision_with_list(ghost, self.wall_list) or arcade.check_for_collision_with_list(ghost, self.teleport_list):
                 ghost.center_x = ghost.m_x * TILE_SIZE + 16
                 ghost.center_y = ghost.m_y * TILE_SIZE + 16
                 ghost.stop()
                 # Сбрасываем путь при столкновении
                 self.ghost_paths[ghost] = None
 
-            # Телепортация призраков (если нужна)
-            if arcade.check_for_collision_with_list(ghost, self.teleport_list):
-                pass
 
         # Обновление игрока
         if arcade.check_for_collision_with_list(player := self.player, self.wall_list):
@@ -257,6 +263,15 @@ class PacmanGame(arcade.View):
             # Сбрасываем пути всех призраков при активации режима поедания
             for ghost in self.ghost_list:
                 self.ghost_paths[ghost] = None
+
+        #cherry
+        cherry_hit_list = arcade.check_for_collision_with_list(self.player, self.cherry_list)
+        for cherry in cherry_hit_list:
+            if self.cherry_avail:
+                cherry.alpha = 0
+                self.cherry_avail = False
+                self.score += 15
+                arcade.play_sound(self.coin_sound)
 
         # Победа
         if not self.coin_list and not self.game_over:
