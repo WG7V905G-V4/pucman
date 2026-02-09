@@ -1,11 +1,10 @@
-from sys import flags
-
 import arcade
 from LevelTools import *
 from classes.Ghost import Ghost
 from classes.Pacman import Pacman
 from classes.Wall import Wall
 from classes.Coin import Coin
+from classes.Cherry import Cherry
 from classes.Apple import Apple
 import time
 from classes.Teleport import Teleport
@@ -26,6 +25,7 @@ class PacmanGame(arcade.View):
         self.player = None
         self.moving_sprites = arcade.SpriteList()
         self.ghost_list = arcade.SpriteList()
+        self.cherry = None
         self.key = None
         self.fruit_list = arcade.SpriteList()
         self.apple_list = arcade.SpriteList()
@@ -58,7 +58,8 @@ class PacmanGame(arcade.View):
 
     def on_draw(self):
         self.clear()
-
+        if self.cherry:
+            arcade.draw_sprite(self.cherry)
         self.wall_list.draw()
         self.coin_list.draw()
         self.teleport_list.draw()
@@ -96,8 +97,6 @@ class PacmanGame(arcade.View):
                     sprite.stop()
                 else:
                     sprite.move()
-
-
 
         for ghost in self.ghost_list:
             ghost.update()
@@ -156,6 +155,15 @@ class PacmanGame(arcade.View):
                     sprite.stop()
                 self.game_over = True
         self.player.update()
+
+        if self.cherry:
+            self.cherry.update()
+            if arcade.check_for_collision(self.player, self.cherry):
+                self.score += 500
+                self.cherry = None
+        else:
+            if self.score%70 == 0 and self.score!= 0:
+                self.cherry = Cherry(coords_to_pixels((9, 13)))
 
 
 
