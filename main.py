@@ -36,7 +36,24 @@ class PacmanGame(arcade.View):
         self.flag_tep = False
         arcade.set_background_color(arcade.color.BLACK)
 
+
+
+
+        self.coin_sound = arcade.load_sound("music/coin_sound.wav")
+        self.apple_sound = arcade.load_sound("music/apple_sound.wav")
+        self.win_sound = arcade.load_sound("music/win_sound.wav")
+        self.lose_sound = arcade.load_sound("music/lose_sound.wav")
+        self.teleport_sound = arcade.load_sound("music/teleport_sound.wav")
+        self.back_music = arcade.load_sound("music/back_music.mp3")
+        self.music_player = None
+
     def setup(self):
+        self.music_player = arcade.play_sound(
+            self.back_music,
+            volume=0.2,
+            loop=True
+        )
+
         for i_row, row in enumerate(self.level_matrix):
             for i_col, col in enumerate(self.level_matrix[i_row]):
                 if col == "coin":
@@ -83,6 +100,8 @@ class PacmanGame(arcade.View):
             self.player.key = key
 
     def on_update(self, delta_time):
+        if self.game_over and self.music_player:
+            self.music_player.delete()
         if self.eat_ghost_mode_on:
             cur_time = time.time()
             if cur_time - self.eat_time >= self.time_for_eat_mode:
@@ -113,12 +132,14 @@ class PacmanGame(arcade.View):
         if self.flag_tep and arcade.check_for_collision(self.player, self.teleport_list[0]):
             self.player.center_x, self.player.center_y = self.teleport_list[1].center_x, self.teleport_list[1].center_y
             self.flag_tep = False
+            arcade.play_sound(self.teleport_sound, volume=0.7)
             print(self.player.center_x, self.player.center_y)
 
         if self.flag_tep and arcade.check_for_collision(self.player, self.teleport_list[1]):
             self.player.center_x, self.player.center_y = self.teleport_list[0].center_x, self.teleport_list[0].center_y
             print(self.player.center_x, self.player.center_y)
             self.flag_tep = False
+            arcade.play_sound(self.teleport_sound, volume=0.7)
         if not arcade.check_for_collision_with_list(self.player, self.teleport_list):
             self.flag_tep = True
 
@@ -127,12 +148,14 @@ class PacmanGame(arcade.View):
         for coin in coins_hit_list:
             coin.remove_from_sprite_lists()
             self.score += 1
+            arcade.play_sound(self.coin_sound, volume=0.7)
 
         apples_hit_list = arcade.check_for_collision_with_list(self.player, self.apple_list)
 
         for apple in apples_hit_list:
             apple.remove_from_sprite_lists()
             self.time_for_eat_mode += 6
+            arcade.play_sound(self.apple_sound, volume=0.7)
             for ghost in self.ghost_list:
                 ghost.texture = arcade.load_texture(ENV_VAR_DICT["EATABLE"])
             self.eat_ghost_mode_on = True
@@ -143,7 +166,10 @@ class PacmanGame(arcade.View):
         if not self.coin_list:
             for sprite in self.moving_sprites:
                 sprite.stop()
+            if not self.game_over:
+                arcade.play_sound(self.win_sound, volume=0.7)
             self.game_over = True
+
 
         if arcade.check_for_collision_with_list(self.player, self.ghost_list):
             if self.eat_ghost_mode_on:
@@ -153,13 +179,17 @@ class PacmanGame(arcade.View):
             else:
                 for sprite in self.moving_sprites:
                     sprite.stop()
+                if not self.game_over:
+                    arcade.play_sound(self.lose_sound, volume=0.7)
                 self.game_over = True
+
         self.player.update()
 
         if self.cherry:
             self.cherry.update()
             if arcade.check_for_collision(self.player, self.cherry):
                 self.score += 500
+                arcade.play_sound(self.apple_sound, volume=0.7)
                 self.cherry = None
         else:
             if self.score%70 == 0 and self.score!= 0:
