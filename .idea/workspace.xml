@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ee8fe92d-a60b-4e70-a236-cbc4046f8e20" name="Changes" comment="pizdaaa">
+      <change beforePath="$PROJECT_DIR$/Sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sprite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="noclassbranch" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;WG7V905G-V4&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/WG7V905G-V4/pucman.git&quot;,
+    &quot;accountId&quot;: &quot;edcd35f1-5774-4b73-9ce7-263f7b542fde&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="38FtYdhWQVRzDTd0dd9JTBz0x4j" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.EnvironmentVariables.executor": "Run",
+    "Python.LEVELTOOLS.executor": "Run",
+    "Python.LevelTools.executor": "Run",
+    "Python.PacmanConsoleVersion.executor": "Run",
+    "Python.PacmanPlayerClass.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.scratch.executor": "Run",
+    "Python.test1.executor": "Run",
+    "Python.utils.executor": "Run",
+    "Python.woief.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "ai.playground.ignore.import.keys.banner.in.settings": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "noclassbranch",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/kosty/PycharmProjects/pucman/img",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kosty\PycharmProjects\pucman\img" />
+      <recent name="C:\Users\kosty\PycharmProjects\pucman\music" />
+      <recent name="C:\Users\kosty\PycharmProjects\pucman" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kosty\PycharmProjects\pucman\img" />
+      <recent name="C:\Users\kosty\PycharmProjects\pucman" />
+      <recent name="C:\Users\kosty\PycharmProjects\pucman\SETTINGS" />
+      <recent name="C:\Users\kosty\PycharmProjects\pucman\.hiden" />
+      <recent name="C:\Users\kosty\PycharmProjects\pucman\utils" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pucman" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-f2b7a9f6281b-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee8fe92d-a60b-4e70-a236-cbc4046f8e20" name="Changes" comment="" />
+      <created>1768407195790</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1768407195790</updated>
+      <workItem from="1768407197035" duration="2121000" />
+      <workItem from="1768423734247" duration="19399000" />
+      <workItem from="1768574274964" duration="33251000" />
+      <workItem from="1768657852722" duration="478000" />
+      <workItem from="1768658369221" duration="172000" />
+      <workItem from="1768658651199" duration="8624000" />
+      <workItem from="1768682336479" duration="5357000" />
+      <workItem from="1768721857133" duration="7414000" />
+      <workItem from="1768744182908" duration="15859000" />
+      <workItem from="1768769156016" duration="2486000" />
+      <workItem from="1768832262297" duration="808000" />
+      <workItem from="1768851672945" duration="9932000" />
+      <workItem from="1768933734970" duration="2718000" />
+      <workItem from="1768936576754" duration="202000" />
+      <workItem from="1768936790728" duration="5254000" />
+      <workItem from="1769008559447" duration="3552000" />
+      <workItem from="1769014672289" duration="400000" />
+      <workItem from="1769160858429" duration="3890000" />
+      <workItem from="1769540214064" duration="1563000" />
+      <workItem from="1769593152324" duration="45000" />
+      <workItem from="1769593232048" duration="37162000" />
+      <workItem from="1769788371041" duration="8365000" />
+      <workItem from="1769852704586" duration="3482000" />
+      <workItem from="1769940950742" duration="2765000" />
+      <workItem from="1769954125268" duration="39000" />
+      <workItem from="1770100468511" duration="15253000" />
+      <workItem from="1770143895427" duration="3931000" />
+      <workItem from="1770149028168" duration="61000" />
+      <workItem from="1770149099754" duration="145000" />
+      <workItem from="1770149258276" duration="10417000" />
+      <workItem from="1770228013415" duration="8736000" />
+      <workItem from="1770314790467" duration="2187000" />
+    </task>
+    <task id="LOCAL-00001" summary="генерация лабиринта и рандомной стартовой поз пакмена (LEVELTOOLS)&#10;+ arcadeView class">
+      <option name="closed" value="true" />
+      <created>1768508072917</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1768508072917</updated>
+    </task>
+    <task id="LOCAL-00002" summary="12131">
+      <option name="closed" value="true" />
+      <created>1768509761879</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1768509761879</updated>
+    </task>
+    <task id="LOCAL-00003" summary="16.01.2026">
+      <option name="closed" value="true" />
+      <created>1768575518144</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1768575518144</updated>
+    </task>
+    <task id="LOCAL-00004" summary="16.01.2026&#10;&#10;большой рефактор">
+      <option name="closed" value="true" />
+      <created>1768588854588</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1768588854588</updated>
+    </task>
+    <task id="LOCAL-00005" summary="рабочий билд без колизии со стенами и монетами">
+      <option name="closed" value="true" />
+      <created>1768613734262</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1768613734262</updated>
+    </task>
+    <task id="LOCAL-00006" summary="17.01.2026 14.04">
+      <option name="closed" value="true" />
+      <created>1768651475830</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1768651475830</updated>
+    </task>
+    <task id="LOCAL-00007" summary="move elif -&gt; if">
+      <option name="closed" value="true" />
+      <created>1768669262770</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1768669262770</updated>
+    </task>
+    <task id="LOCAL-00008" summary="pacman move fix">
+      <option name="closed" value="true" />
+      <created>1768733767358</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1768733767360</updated>
+    </task>
+    <task id="LOCAL-00009" summary="stable version random ghost">
+      <option name="closed" value="true" />
+      <created>1768737319170</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1768737319170</updated>
+    </task>
+    <task id="LOCAL-00010" summary=".">
+      <option name="closed" value="true" />
+      <created>1768747127595</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1768747127595</updated>
+    </task>
+    <task id="LOCAL-00011" summary="6 ghosts">
+      <option name="closed" value="true" />
+      <created>1768761634386</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1768761634386</updated>
+    </task>
+    <task id="LOCAL-00012" summary="6 ghosts">
+      <option name="closed" value="true" />
+      <created>1768761641653</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1768761641653</updated>
+    </task>
+    <task id="LOCAL-00013" summary="4 ghosts">
+      <option name="closed" value="true" />
+      <created>1768767304619</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1768767304619</updated>
+    </task>
+    <task id="LOCAL-00014" summary="No class version">
+      <option name="closed" value="true" />
+      <created>1770100527059</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1770100527059</updated>
+    </task>
+    <task id="LOCAL-00015" summary="apple">
+      <option name="closed" value="true" />
+      <created>1770105093698</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1770105093698</updated>
+    </task>
+    <task id="LOCAL-00016" summary="colorful ghosts">
+      <option name="closed" value="true" />
+      <created>1770119678143</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770119678143</updated>
+    </task>
+    <task id="LOCAL-00017" summary="colorful ghosts">
+      <option name="closed" value="true" />
+      <created>1770121654130</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1770121654130</updated>
+    </task>
+    <task id="LOCAL-00018" summary="another apple texture">
+      <option name="closed" value="true" />
+      <created>1770130455928</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1770130455928</updated>
+    </task>
+    <task id="LOCAL-00019" summary="another apple texture">
+      <option name="closed" value="true" />
+      <created>1770130460782</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1770130460782</updated>
+    </task>
+    <task id="LOCAL-00020" summary="pacman update">
+      <option name="closed" value="true" />
+      <created>1770137499082</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1770137499082</updated>
+    </task>
+    <task id="LOCAL-00021" summary="ghost collision">
+      <option name="closed" value="true" />
+      <created>1770143443534</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1770143443534</updated>
+    </task>
+    <task id="LOCAL-00022" summary="030226">
+      <option name="closed" value="true" />
+      <created>1770152402776</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1770152402776</updated>
+    </task>
+    <task id="LOCAL-00023" summary="rjubnruit">
+      <option name="closed" value="true" />
+      <created>1770219288150</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1770219288150</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Changes by USER">
+      <option name="closed" value="true" />
+      <created>1770219296253</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1770219296253</updated>
+    </task>
+    <task id="LOCAL-00025" summary="img files">
+      <option name="closed" value="true" />
+      <created>1770462539573</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1770462539573</updated>
+    </task>
+    <task id="LOCAL-00026" summary="pizdaaa">
+      <option name="closed" value="true" />
+      <created>1770668018114</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1770668018114</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="42" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="43" />
+                  <entry key="Table.GitHub.CommitStatus.ColumnIdWidth" value="43" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="генерация лабиринта и рандомной стартовой поз пакмена (LEVELTOOLS)&#10;+ arcadeView class" />
+    <MESSAGE value="12131" />
+    <MESSAGE value="16.01.2026" />
+    <MESSAGE value="16.01.2026&#10;&#10;большой рефактор" />
+    <MESSAGE value="рабочий билд без колизии со стенами и монетами" />
+    <MESSAGE value="17.01.2026 14.04" />
+    <MESSAGE value="move elif -&gt; if" />
+    <MESSAGE value="pacman move fix" />
+    <MESSAGE value="stable version random ghost" />
+    <MESSAGE value="." />
+    <MESSAGE value="6 ghosts" />
+    <MESSAGE value="4 ghosts" />
+    <MESSAGE value="No class version" />
+    <MESSAGE value="apple" />
+    <MESSAGE value="colorful ghosts" />
+    <MESSAGE value="another apple texture" />
+    <MESSAGE value="pacman update" />
+    <MESSAGE value="ghost collision" />
+    <MESSAGE value="030226" />
+    <MESSAGE value="rjubnruit" />
+    <MESSAGE value="Changes by USER" />
+    <MESSAGE value="img files" />
+    <MESSAGE value="pizdaaa" />
+    <option name="LAST_COMMIT_MESSAGE" value="pizdaaa" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pucman$LEVELTOOLS.coverage" NAME="LEVELTOOLS Coverage Results" MODIFIED="1768466237926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$utils.coverage" NAME="utils Coverage Results" MODIFIED="1769624578045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$woief.coverage" NAME="woief Coverage Results" MODIFIED="1769603793750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1770225277733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
+    <SUITE FILE_PATH="coverage/pucman$main.coverage" NAME="main Coverage Results" MODIFIED="1770319279902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1768462764760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$PacmanConsoleVersion.coverage" NAME="PacmanConsoleVersion Coverage Results" MODIFIED="1768580898837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$PacmanPlayerClass.coverage" NAME="PacmanPlayerClass Coverage Results" MODIFIED="1768577777004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$EnvironmentVariables.coverage" NAME="EnvironmentVariables Coverage Results" MODIFIED="1768588066863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pucman$LevelTools.coverage" NAME="LevelTools Coverage Results" MODIFIED="1769207961374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

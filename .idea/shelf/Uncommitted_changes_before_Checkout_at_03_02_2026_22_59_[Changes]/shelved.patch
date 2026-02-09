@@ -1,0 +1,137 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import arcade\r\nfrom arcade import check_for_collision_with_lists as collision_lists\r\nfrom Sprite import Sprite\r\nfrom utils import *\r\n\r\ndef collision_of_lists(lists1, lists2, action):\r\n\r\n\r\nclass PacmanGame(arcade.View):\r\n    def __init__(self, level_matrix, w_s_x=0, w_s_y=0):\r\n        super().__init__()\r\n        self.w, self.h = w_s_x, w_s_y\r\n        self.score = 0\r\n        self.game_over = False\r\n        self.level_matrix = level_matrix\r\n        self.coin = arcade.SpriteList(),\r\n        self.ghost = arcade.SpriteList(),\r\n        self.wall = arcade.SpriteList(),\r\n        self.pacman = arcade.SpriteList()\r\n        arcade.set_background_color(arcade.color.BLACK)\r\n\r\n    def append(self, sprite):\r\n        if sprite.character_type == \"pacman\":\r\n            self.pacman = sprite\r\n        type = \"ghost\" if \"ghost\" in sprite.character_type else sprite.character_type\r\n        getattr(self, type).append(sprite)\r\n\r\n    def stop(self):\r\n        for list_type in [\"wall\", \"coin\", \"ghost\", \"pacman\"]:\r\n            for sprite in getattr(self, list_type):\r\n                sprite.stop()\r\n\r\n    def update(self):\r\n        for list_type in [\"wall\", \"coin\", \"ghost\", \"pacman\"]:\r\n            getattr(self, list_type).update()\r\n\r\n    def draw(self):\r\n        for list_type in [\"wall\", \"coin\", \"ghost\", \"pacman\"]:\r\n            getattr(self, list_type).draw()\r\n\r\n    def setup(self):\r\n        for cord_y, row in enumerate(self.level_matrix):\r\n            for cord_x, item in enumerate(row):\r\n                self.append(Sprite(item, coords_to_pixels((cord_x, cord_y))))\r\n\r\n    def on_draw(self):\r\n        self.clear()\r\n        self.draw()\r\n        arcade.draw_text(f\"Score: {self.score}\", ENV_VAR_DICT['TILE_SIZE']+2, ENV_VAR_DICT['TILE_SIZE']//3,\r\n                         arcade.color.YELLOW, ENV_VAR_DICT['TILE_SIZE']//2)\r\n        if self.game_over and not self.get([\"coin\"]):\r\n            arcade.draw_text(\"YOU WIN\", self.w // 2, self.h // 2,\r\n                             arcade.color.GREEN, 50, anchor_x=\"center\")\r\n        if self.game_over and self.get([\"coin\"]):\r\n            arcade.draw_text(\"GAME OVER\", self.w // 2, self.h // 2,\r\n                             arcade.color.RED, 50, anchor_x=\"center\")\r\n\r\n    def on_key_press(self, key, modifiers):\r\n        if not self.game_over:\r\n            self.pacman.key = key\r\n\r\n    def on_update(self, delta_time):\r\n        self.update()\r\n        for pacman in self.pacman:\r\n            if collision_lists(pacman, self.wall):\r\n                def collision(item):\r\n                    item.center_x = item.m_x * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2\r\n                    item.center_y = item.m_y * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2\r\n                    item.stop()\r\n\r\n        for ghost in self.ghost:\r\n            if arcade.check_for_collision_with_lists(ghost, [self.ghost, self.wall]):\r\n                collision(ghost)\r\n            coin_hit = collision_lists(self.pacman, self.get([\"coin\"]))\r\n            for food in food_hit_list:\r\n                food.remove_from_sprite_lists()\r\n                self.score += 1\r\n\r\n            if collision_lists(self.pacman, self.get([\"ghost\"])):\r\n                self.stop()\r\n                self.game_over = True\r\n\r\n        if not self.get([\"coin\"]):\r\n            self.stop()\r\n            self.game_over = True\r\n\r\n\r\ndef main():\r\n    level_matrix = load_level_from_txt()\r\n    w_s_x,w_s_y = len(level_matrix[0])*ENV_VAR_DICT['TILE_SIZE'], len(level_matrix)*ENV_VAR_DICT['TILE_SIZE']\r\n    window = arcade.Window(w_s_x, w_s_y, \"PACMAN GAME\", resizable=True)\r\n    game = PacmanGame(level_matrix, w_s_x, w_s_y)\r\n    game.setup()\r\n    window.show_view(game)\r\n    arcade.run()\r\n\r\nif __name__ == \"__main__\":\r\n    main()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision 617793162f2e484ecc38aa41236529c4873e3b45)
++++ b/main.py	(date 1770149561398)
+@@ -3,9 +3,6 @@
+ from Sprite import Sprite
+ from utils import *
+ 
+-def collision_of_lists(lists1, lists2, action):
+-
+-
+ class PacmanGame(arcade.View):
+     def __init__(self, level_matrix, w_s_x=0, w_s_y=0):
+         super().__init__()
+@@ -13,29 +10,34 @@
+         self.score = 0
+         self.game_over = False
+         self.level_matrix = level_matrix
+-        self.coin = arcade.SpriteList(),
+-        self.ghost = arcade.SpriteList(),
+-        self.wall = arcade.SpriteList(),
+-        self.pacman = arcade.SpriteList()
++        self.coin = arcade.SpriteList()
++        self.ghost = arcade.SpriteList()
++        self.wall = arcade.SpriteList()
++        self.pacman = None
++        self.music = arcade.load_sound(r"C:\qwqwqwq\ьз4\fakemink - Dumb ..mp3", streaming=True)
+         arcade.set_background_color(arcade.color.BLACK)
+ 
+     def append(self, sprite):
+         if sprite.character_type == "pacman":
+             self.pacman = sprite
++            return
++        if type == "apple":
++            type = "coin"
++
+         type = "ghost" if "ghost" in sprite.character_type else sprite.character_type
+         getattr(self, type).append(sprite)
+ 
+     def stop(self):
+-        for list_type in ["wall", "coin", "ghost", "pacman"]:
++        for list_type in ["wall", "coin", "move"]:
+             for sprite in getattr(self, list_type):
+                 sprite.stop()
+ 
+     def update(self):
+-        for list_type in ["wall", "coin", "ghost", "pacman"]:
++        for list_type in ["wall", "coin", "move"]:
+             getattr(self, list_type).update()
+ 
+     def draw(self):
+-        for list_type in ["wall", "coin", "ghost", "pacman"]:
++        for list_type in ["wall", "coin", "move"]:
+             getattr(self, list_type).draw()
+ 
+     def setup(self):
+@@ -48,10 +50,10 @@
+         self.draw()
+         arcade.draw_text(f"Score: {self.score}", ENV_VAR_DICT['TILE_SIZE']+2, ENV_VAR_DICT['TILE_SIZE']//3,
+                          arcade.color.YELLOW, ENV_VAR_DICT['TILE_SIZE']//2)
+-        if self.game_over and not self.get(["coin"]):
++        if self.game_over and not self.coin:
+             arcade.draw_text("YOU WIN", self.w // 2, self.h // 2,
+                              arcade.color.GREEN, 50, anchor_x="center")
+-        if self.game_over and self.get(["coin"]):
++        if self.game_over and self.coin:
+             arcade.draw_text("GAME OVER", self.w // 2, self.h // 2,
+                              arcade.color.RED, 50, anchor_x="center")
+ 
+@@ -61,24 +63,25 @@
+ 
+     def on_update(self, delta_time):
+         self.update()
+-        for pacman in self.pacman:
+-            if collision_lists(pacman, self.wall):
+-                def collision(item):
+-                    item.center_x = item.m_x * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2
+-                    item.center_y = item.m_y * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2
+-                    item.stop()
++        def collision(sprite):
++            sprite.center_x = sprite.m_x * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2
++            sprite.center_y = sprite.m_y * ENV_VAR_DICT['TILE_SIZE'] + ENV_VAR_DICT['TILE_SIZE'] // 2
++            sprite.stop()
++        for sprite in self.ghost:
++            if arcade.check_for_collision_with_list(sprite, self.wall):
++                collision(sprite)
+ 
+-        for ghost in self.ghost:
+-            if arcade.check_for_collision_with_lists(ghost, [self.ghost, self.wall]):
+-                collision(ghost)
+-            coin_hit = collision_lists(self.pacman, self.get(["coin"]))
+-            for food in food_hit_list:
+-                food.remove_from_sprite_lists()
+-                self.score += 1
++        if arcade.check_for_collision_with_list(self.pacman, self.wall):
++            collision(self.pacman)
++
++        coin_hit = arcade.check_for_collision_with_list(self.pacman, self.coin)
++        for food in coin_hit:
++            food.remove_from_sprite_lists()
++            self.score += 1
+ 
+-            if collision_lists(self.pacman, self.get(["ghost"])):
+-                self.stop()
+-                self.game_over = True
++        if not self.coin or arcade.check_for_collision_with_list(self.pacman, self.ghost):
++            self.stop()
++            self.game_over = True
+ 
+         if not self.get(["coin"]):
+             self.stop()
+Index: utils.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import random, csv\r\n\r\nwith open(\"SETTINGS/EnvVars.csv\", \"r\") as f:\r\n    ENV_VAR_DICT = {key: int(val) if val.isdigit() else val for key, val in csv.reader(f)}\r\n\r\ndef generate_maze_with_cycles(width, height, cycle_percent=15):\r\n    if width % 2 == 0:\r\n        width += 1\r\n    if height % 2 == 0:\r\n        height += 1\r\n    matrix = [[1 for _ in range(width)] for _ in range(height)]\r\n    start_x, start_y = 1, 1\r\n    matrix[start_y][start_x] = 0\r\n    walls = []\r\n    def add_walls(x, y):\r\n        if x > 1:\r\n            walls.append((x - 1, y, x - 2, y))\r\n        if x < width - 2:\r\n            walls.append((x + 1, y, x + 2, y))\r\n        if y > 1:\r\n            walls.append((x, y - 1, x, y - 2))\r\n        if y < height - 2:\r\n            walls.append((x, y + 1, x, y + 2))\r\n    add_walls(start_x, start_y)\r\n    while walls:\r\n        wall_x, wall_y, next_x, next_y = random.choice(walls)\r\n        walls.remove((wall_x, wall_y, next_x, next_y))\r\n        if matrix[next_y][next_x] == 1:\r\n            matrix[wall_y][wall_x] = 0\r\n            matrix[next_y][next_x] = 0\r\n            add_walls(next_x, next_y)\r\n    if cycle_percent > 0:\r\n        inner_walls = []\r\n        for y in range(2, height - 2):\r\n            for x in range(2, width - 2):\r\n                if matrix[y][x] == 1:\r\n                    if (matrix[y][x - 1] == 0 and matrix[y][x + 1] == 0) or \\\r\n                            (matrix[y - 1][x] == 0 and matrix[y + 1][x] == 0):\r\n                        inner_walls.append((x, y))\r\n        walls_to_remove = int(len(inner_walls) * cycle_percent / 100)\r\n        if inner_walls:\r\n            walls_to_delete = random.sample(inner_walls,\r\n                                            min(walls_to_remove, len(inner_walls)))\r\n            for x, y in walls_to_delete:\r\n                matrix[y][x] = 0\r\n    return matrix\r\n\r\n\r\ndef set_pacman_position(matrix):\r\n    rand = random.random()\r\n    if rand <=0.25 and matrix[1][1] == 0:\r\n        matrix[1][1] = 3\r\n    elif 0.25 < rand <= 0.5 and matrix[1][len(matrix[0])-2] == 0:\r\n        matrix[1][ len(matrix[0]) - 2] = 3\r\n    elif 0.5 < rand <= 0.75 and matrix[len(matrix)-2][1] == 0:\r\n        matrix[len(matrix) - 2][1] = 3\r\n    else:\r\n        matrix[len(matrix) - 2][ len(matrix[0]) - 2] = 3\r\n\r\ndef set_ghost_cage(matrix):\r\n    x,y  = len(matrix)//2, len(matrix)//2\r\n    matrix[y][x] = 2\r\n\r\ndef coords_to_pixels(cords):\r\n    return tuple([cord*ENV_VAR_DICT[\"TILE_SIZE\"]+ENV_VAR_DICT[\"TILE_SIZE\"]//2 for cord in cords])\r\n\r\n\r\ndef load_level_from_txt():\r\n    decode_emoji_lst = {\"⬜\":\"coin\",\r\n                        \"⬛\":\"wall\",\r\n                        \"\uD83D\uDE10\":\"pacman\",\r\n                        \"\uD83D\uDE21\":\"r_ghost\",\r\n                        \"⭐\":\"y_ghost\",\r\n                        \"\uD83D\uDCD8\":\"b_ghost\",\r\n                        \"\uD83D\uDE08\":\"p_ghost\"}\r\n    with open(\"SETTINGS/level.txt\", \"r\", encoding=\"utf-8\") as file:\r\n        return [[decode_emoji_lst[emoji] for emoji in row.strip()] for row in file.readlines()]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/utils.py b/utils.py
+--- a/utils.py	(revision 617793162f2e484ecc38aa41236529c4873e3b45)
++++ b/utils.py	(date 1770149497869)
+@@ -72,6 +72,7 @@
+                         "😡":"r_ghost",
+                         "⭐":"y_ghost",
+                         "📘":"b_ghost",
+-                        "😈":"p_ghost"}
++                        "😈":"p_ghost",
++                        "🍎":"apple"}
+     with open("SETTINGS/level.txt", "r", encoding="utf-8") as file:
+         return [[decode_emoji_lst[emoji] for emoji in row.strip()] for row in file.readlines()]
+\ No newline at end of file
