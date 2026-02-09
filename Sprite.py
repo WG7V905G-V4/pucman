@@ -41,7 +41,7 @@ class Sprite(arcade.Sprite):
         if type == "coin":
             self.points = 10
 
-    def update_cherry(self):
+    def update_cherry(self, score):
         if self.points == 100:
             self.points = 0
             self.texture = arcade.load_texture("img/BLANK_TEXTURE.png")

@@ -88,12 +88,15 @@ class PacmanGame(arcade.View):
                 for i in self.teleport:
                     i.delta_time = True
 
-        coin_hit = arcade.check_for_collision_with_list(self.pacman, self.coin)
+        coin_hit = arcade.check_for_collision_with_lists(self.pacman, self.coin, self.cherry)
         for coin in coin_hit:
             arcade.play_sound(arcade.load_sound("music/coin.mp3"), volume=0.2)
             coin.remove_from_sprite_lists()
-            self.score += 1
+            self.score += coin.points
 
+        if self.score%70 == 0:
+            for i in self.cherry:
+                i.update_cherry()
 
 
 
