@@ -12,50 +12,41 @@ with open("SETTINGS/EnvVars.csv", "r") as f:
 def cords_to_pixels(cords):
     return tuple([cord * ENV_VAR_DICT["TILE_SIZE"] + ENV_VAR_DICT["TILE_SIZE"] // 2 for cord in cords])
 
+def load_level_from_txt():
+    with open("SETTINGS/level.txt", "r", encoding="utf-8") as file:
+        return [[sprite(emoji, cords_to_pixels((posx, posy))) for posx, emoji in enumerate(row.strip())] for posy, row in
+                enumerate(file.readlines())]
 
 KEY_CONFIG = {
     arcade.key.UP: (-1, 0, 1),
     arcade.key.DOWN: (1, 0, -1),
     arcade.key.LEFT: (2, -1, 0),
-    arcade.key.RIGHT:(0, 1, 0)
-}
+    arcade.key.RIGHT:(0, 1, 0)}
 
 class Sprite(arcade.Sprite):
-    def __init__(self, type, cords, texture, delta = None, speed = 0, angle = 0, scale = 1):
+    def __init__(self, type, cords, texture, scale, delta_time, speed, angle):
         self.type = type
-        x, y =cords
+        x,y = cords
         super().__init__(f"img/{texture}.png", scale, x,y)
         self.angl = angle
         self.speed = speed
-        if "ghost" in type:
-            self.is_eatable = False
-            self.alt_texture = "img/GHOST_ALT.png"
-        if delta:
-            self.delta_time = delta
+        self.delta_time = delta_time
+        self.timer = 0
         self.m_x = self.center_x // ENV_VAR_DICT["TILE_SIZE"]
         self.m_y = self.center_y // ENV_VAR_DICT["TILE_SIZE"]
         self.key = None
-        self.timer=0
-        if type == "cherry":
-            self.points = 100
-        if type == "coin":
-            self.points = 10
+        self.points = 10 if "coin" in type else 0
+        self.teleportable = True
 
-    def update_cherry(self, score):
-        if self.points == 100:
-            self.points = 0
-            self.texture = arcade.load_texture("img/BLANK_TEXTURE.png")
-        else:
-            self.points = 100
-            self.texture = arcade.load_texture("img/CHERRY_TEXTURE.png")
+    def cherry_delete(self):
+        self.points = 0
+        self.texture = arcade.load_texture("img/BLANK_TEXTURE.png")
+    def cherry_add(self):
+        self.points = 100
+        self.texture = arcade.load_texture("img/CHERRY_TEXTURE.png")
 
 
     def ghost_update(self):
-        if self.is_eatable:
-            self.texture = arcade.load_texture("img/GHOST_ALT.png")
-        else:
-            self.texture = arcade.load_texture(f"img/{self.type.upper()}_TEXTURE.png")
-
         if self.delta_time == self.timer:
             self.key = random.choice([arcade.key.UP,
                                       arcade.key.DOWN,
@@ -64,7 +55,7 @@ class Sprite(arcade.Sprite):
             self.timer = 0
         self.timer += 1
 
-    def update(self, delta_time=random.randrange(1,59)/60, *args, **kwargs):
+    def update(self, delta_time=1/60, *args, **kwargs):
         if "ghost" in self.type:
             self.ghost_update()
 
@@ -86,31 +77,28 @@ class Sprite(arcade.Sprite):
             )
 
     def stop(self):
+        self.key = None
         if self.center_x % (ENV_VAR_DICT["TILE_SIZE"]//2) == 0 and self.center_y %(ENV_VAR_DICT["TILE_SIZE"]//2) == 0:
-            self.key = None
             super().stop()
 
     def teleport(self, portal):
-        if portal.delta_time:
+        if self.teleportable:
             self.delta_time = portal.delta_time
             self.center_x = portal.center_x
             self.center_y = portal.center_y
-            portal.delta_time = False
+            self.teleportable = False
 
 def sprite(emoji, cords):
-    types = {"⬜": lambda crds: Sprite("coin", cords, "COIN_TEXTURE"),
-             "⬛": lambda crds: Sprite("wall", cords, "WALL_TEXTURE"),
-             "😐": lambda crds: Sprite("pacman", cords, "PACMAN_TEXTURE", None, 4, 90),
-             "😡": lambda crds: Sprite("r_ghost", cords, "R_GHOST_TEXTURE", 100, 4),
-             "⭐": lambda crds: Sprite("y_ghost", cords, "Y_GHOST_TEXTURE", 120, 4),
-             "📘": lambda crds: Sprite("b_ghost", cords, "B_GHOST_TEXTURE", 110, 4),
-             "😈": lambda crds: Sprite("p_ghost", cords, "P_GHOST_TEXTURE", 130, 4),
-             "🍎": lambda crds: Sprite("powerup", cords, "COIN_TEXTURE"),
-             "💛": lambda crds: Sprite("teleport", cords, "PACMAN_TEXTURE", True),
-             "🍒": lambda crds: Sprite("cherry", cords, "CHERRY_TEXTURE"),}
+    types = {"⬜": lambda crds: Sprite("coin", cords, "COIN_TEXTURE", 0.6, None, 0,0),
+             "⬛": lambda crds: Sprite("wall", cords, "WALL_TEXTURE",1, None, 0,0),
+             "😐": lambda crds: Sprite("pacman", cords, "PACMAN_TEXTURE",1, None, 4, 90),
+             "😡": lambda crds: Sprite("r_ghost", cords, "R_GHOST_TEXTURE",1, 20, 4, 0),
+             "⭐": lambda crds: Sprite("y_ghost", cords, "Y_GHOST_TEXTURE",1, 24, 4,0),
+             "📘": lambda crds: Sprite("b_ghost", cords, "B_GHOST_TEXTURE",1, 22, 4,0),
+             "😈": lambda crds: Sprite("p_ghost", cords, "P_GHOST_TEXTURE",1, 26, 4,0),
+             "🍎": lambda crds: Sprite("powerup", cords, "COIN_TEXTURE",1.2,None, 0,0),
+             "💛": lambda crds: Sprite("teleport", cords, "PACMAN_TEXTURE",1, None, 0,0),
+             "🍒": lambda crds: Sprite("cherry", cords, "BLANK_TEXTURE", 1, None, 0,0),
+             }
     return types[emoji](cords)
 
-def load_level_from_txt():
-    with open("SETTINGS/level.txt", "r", encoding="utf-8") as file:
-        return [[sprite(emoji, cords_to_pixels((posx, posy))) for posx, emoji in enumerate(row.strip())] for posy, row in
-                enumerate(file.readlines())]
