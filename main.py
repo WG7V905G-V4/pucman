@@ -8,7 +8,7 @@ class PacmanGame(arcade.View):
         self.score_text = None
         self.game_over = False
 
-        self.music = arcade.load_sound("music/pacman_back.mp3")
+        self.music = arcade.load_sound("music/back_music.mp3")
 
         self.level_matrix = level_matrix
         self.eat_timer = 0
@@ -42,7 +42,7 @@ class PacmanGame(arcade.View):
 
     def on_draw(self):
         self.clear()
-        for list_type in ["wall", "coin", "move", "cherry", "powerup", "teleport"]:
+        for list_type in ["wall", "coin", "cherry", "powerup", "teleport", "move"]:
             getattr(self, list_type).draw()
         arcade.Text(f"Score: {self.score}",
                     ENV_VAR_DICT['TILE_SIZE'] + 2,
@@ -68,7 +68,8 @@ class PacmanGame(arcade.View):
             getattr(self, list_type).update()
 
     def on_update(self, delta_time):
-        self.update()
+        if not self.game_over:
+            self.update()
         for item in self.move:
 
             #WALL COLLISION
@@ -87,7 +88,7 @@ class PacmanGame(arcade.View):
         #COIN
         coin_hit = arcade.check_for_collision_with_list(self.pacman, self.coin)
         for coin in coin_hit:
-            arcade.play_sound(arcade.load_sound("music/coin.mp3"), volume=0.2)
+            arcade.play_sound(arcade.load_sound("music/coin_sound.wav"), volume=0.2)
             coin.remove_from_sprite_lists()
             self.score += coin.points
 
@@ -103,20 +104,34 @@ class PacmanGame(arcade.View):
         for powerup in hit_powerups:
             powerup.remove_from_sprite_lists()
             for ghost in self.ghost:
+                ghost.eatable = True
                 ghost.texture = arcade.load_texture("img/GHOST_ALT.png")
                 self.eat_timer = 360
 
         if self.eat_timer > 0:
             self.eat_timer -= 1
+            eaten_ghost = arcade.check_for_collision_with_list(self.pacman, self.ghost)
+            for ghost in eaten_ghost:
+                if ghost.eatable:
+                    ghost.center_x, ghost.center_y = cords_to_pixels((9,11))
+                    ghost.texture = arcade.load_texture(f"img/{ghost.type.upper()}_TEXTURE.png")
+                    ghost.eatable = False
+                else:
+                    self.stop()
+                    self.game_over = True
 
         if self.eat_timer == 0:
             for ghost in self.ghost:
                 ghost.texture = arcade.load_texture(f"img/{ghost.type.upper()}_TEXTURE.png")
+                ghost.eatable = False
+
 
         #GAME END
-        if not self.coin or arcade.check_for_collision_with_list(self.pacman, self.ghost):
+        if not self.coin or (self.eat_timer== 0 and arcade.check_for_collision_with_list(self.pacman, self.ghost)):
             self.stop()
             self.game_over = True
+
+
 
 
 

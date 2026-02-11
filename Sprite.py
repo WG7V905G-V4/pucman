@@ -37,6 +37,7 @@ class Sprite(arcade.Sprite):
         self.key = None
         self.points = 10 if "coin" in type else 0
         self.teleportable = True
+        self.eatable = False
 
     def cherry_delete(self):
         self.points = 0
@@ -58,17 +59,15 @@ class Sprite(arcade.Sprite):
     def update(self, delta_time=1/60, *args, **kwargs):
         if "ghost" in self.type:
             self.ghost_update()
-
-        if self.center_x % 32 - 16 == 0 and self.center_y % 32 - 16 == 0:
-            if self.key:
-                self.move()
-            else:
-                self.stop()
+        if self.key:
+            self.move()
+        else:
+            self.stop()
         self.m_x , self.m_y = self.center_x//ENV_VAR_DICT["TILE_SIZE"], self.center_y//ENV_VAR_DICT["TILE_SIZE"]
         super().update()
 
     def move(self):
-        if self.key in KEY_CONFIG:
+        if self.center_x % 32 - 16 == 0 and self.center_y % 32 - 16 == 0 and self.key in KEY_CONFIG:
             self.angle, self.change_x, self.change_y =tuple(
                 x * y for x, y in zip(
                     (self.angl, self.speed, self.speed),
@@ -92,12 +91,12 @@ def sprite(emoji, cords):
     types = {"⬜": lambda crds: Sprite("coin", cords, "COIN_TEXTURE", 0.6, None, 0,0),
              "⬛": lambda crds: Sprite("wall", cords, "WALL_TEXTURE",1, None, 0,0),
              "😐": lambda crds: Sprite("pacman", cords, "PACMAN_TEXTURE",1, None, 4, 90),
-             "😡": lambda crds: Sprite("r_ghost", cords, "R_GHOST_TEXTURE",1, 20, 4, 0),
-             "⭐": lambda crds: Sprite("y_ghost", cords, "Y_GHOST_TEXTURE",1, 24, 4,0),
-             "📘": lambda crds: Sprite("b_ghost", cords, "B_GHOST_TEXTURE",1, 22, 4,0),
-             "😈": lambda crds: Sprite("p_ghost", cords, "P_GHOST_TEXTURE",1, 26, 4,0),
+             "😡": lambda crds: Sprite("r_ghost", cords, "R_GHOST_TEXTURE",1, 100, 4, 0),
+             "⭐": lambda crds: Sprite("y_ghost", cords, "Y_GHOST_TEXTURE",1, 110, 3,0),
+             "📘": lambda crds: Sprite("b_ghost", cords, "B_GHOST_TEXTURE",1, 120, 2,0),
+             "😈": lambda crds: Sprite("p_ghost", cords, "P_GHOST_TEXTURE",1, 130, 3,0),
              "🍎": lambda crds: Sprite("powerup", cords, "COIN_TEXTURE",1.2,None, 0,0),
-             "💛": lambda crds: Sprite("teleport", cords, "PACMAN_TEXTURE",1, None, 0,0),
+             "💛": lambda crds: Sprite("teleport", cords, "TELEPORT",1, None, 0,0),
              "🍒": lambda crds: Sprite("cherry", cords, "BLANK_TEXTURE", 1, None, 0,0),
              }
     return types[emoji](cords)
